@@ -45,7 +45,7 @@ export default function Hero() {
           <div className="order-2 lg:order-1">
             <Badge className="mb-6">
               <Star className="size-3 mr-1" />
-              Rated #2 in customer satisfaction
+              Rated #2 in customers satisfaction
             </Badge>
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-foreground mb-6">
