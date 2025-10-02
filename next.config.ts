@@ -22,6 +22,7 @@ const nextConfig: NextConfig = {
     // ✅ Skip lint errors in production builds
     ignoreDuringBuilds: true,
   },
+  output: "export",
 };
 
 export default nextConfig;
