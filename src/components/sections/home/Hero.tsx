@@ -49,7 +49,7 @@ export default function Hero() {
             </Badge>
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-foreground mb-6">
-              NO Yes Yes Yes Yes platform that
+              Yes platform that
               <span className="text-primary"> grows </span>
               with you
             </h1>
