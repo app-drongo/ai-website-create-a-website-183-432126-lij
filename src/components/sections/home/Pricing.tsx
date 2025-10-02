@@ -8,6 +8,18 @@ import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+// ✅ Define the shape of a pricing plan
+interface PricingPlan {
+  name: string;
+  description: string;
+  monthlyPrice: number | null;
+  annualPrice: number | null;
+  badge: string | null;
+  features: string[];
+  cta: string;
+  popular: boolean;
+}
+
 export default function Pricing() {
   const router = useRouter();
   const [isAnnual, setIsAnnual] = useState(false);
@@ -27,7 +39,7 @@ export default function Pricing() {
   };
   // ACTION_PLACEHOLDER_END
 
-  const plans = [
+  const plans: PricingPlan[] = [
     {
       name: 'Startup',
       description: 'Perfect for early-stage SaaS ventures',
@@ -85,18 +97,18 @@ export default function Pricing() {
     },
   ];
 
-  const getPrice = plan => {
+  // ✅ Fix typing for plan
+  const getPrice = (plan: PricingPlan): string => {
     if (plan.monthlyPrice === null) return 'Custom';
     if (plan.monthlyPrice === 0) return 'Free';
     return isAnnual ? `$${plan.annualPrice}` : `$${plan.monthlyPrice}`;
   };
 
-  const getSavings = plan => {
+  const getSavings = (plan: PricingPlan): number | null => {
     if (plan.monthlyPrice === null || plan.monthlyPrice === 0) return null;
     const monthlyCost = plan.monthlyPrice * 12;
-    const annualCost = plan.annualPrice * 12;
-    const savings = Math.round(((monthlyCost - annualCost) / monthlyCost) * 100);
-    return savings;
+    const annualCost = (plan.annualPrice ?? plan.monthlyPrice) * 12;
+    return Math.round(((monthlyCost - annualCost) / monthlyCost) * 100);
   };
 
   return (
@@ -208,7 +220,7 @@ export default function Pricing() {
 
                 {isAnnual && plan.monthlyPrice !== null && plan.monthlyPrice !== 0 && (
                   <div className="text-sm text-muted-foreground">
-                    Billed annually (${plan.annualPrice * 12}/year)
+                    Billed annually (${(plan.annualPrice ?? plan.monthlyPrice) * 12}/year)
                   </div>
                 )}
               </CardHeader>
@@ -232,8 +244,8 @@ export default function Pricing() {
                     index === 0
                       ? handleStarterAction
                       : index === 1
-                        ? handleProfessionalAction
-                        : handleEnterpriseAction
+                      ? handleProfessionalAction
+                      : handleEnterpriseAction
                   }
                   className={cn(
                     'w-full text-base py-6',
